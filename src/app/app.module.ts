@@ -7,6 +7,7 @@ import { UiComponent } from './ui/ui.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { HandtrackerComponent } from './handtracker/handtracker.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CarouselComponent } from './carousel/carousel.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
