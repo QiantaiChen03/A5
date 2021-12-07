@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/app/slide-carousel/slide-carousel.component.ts
 import { Component, Input, OnInit } from "@angular/core";
 import { trigger, transition, useAnimation } from "@angular/animations";
 import { Slide } from "./slide-carousel.interface";
@@ -51,16 +52,54 @@ import {
       ]),
       transition("jackInTheBox => void", [
         useAnimation(jackOut, { params: { time: "700ms" } })
+=======
+import { animate, animation, style, transition, trigger, useAnimation } from '@angular/animations';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { IDocuments } from '../app.component';
+import {RxjsIntervalService} from "../services/rxjs-interval.service"
+
+export const fadeIn=animation([
+  style({opacity:0}),
+  animate('2s',style({opacity:1}))
+])
+
+export const scaleIn=animation([
+  style({opacity:0,transform:"scale(0.5)"}),
+  animate('2s',style({opacity:1,transform:"scale(1)"}))
+])
+
+
+@Component({
+  selector: 'app-carousel',
+  templateUrl: './carousel.component.html',
+  styleUrls: ['./carousel.component.css'],
+  animations:[
+    trigger('carouselAnimation',[
+      transition('void=>*',[
+       useAnimation(fadeIn)
+>>>>>>> upstream/master:src/app/carousel/carousel.component.ts
       ])
     ])
+
   ]
 })
+<<<<<<< HEAD:src/app/slide-carousel/slide-carousel.component.ts
 export class SlideCarouselComponent implements OnInit {
   @Input() slides: Slide[];
   @Input() animationType = AnimationType.Scale;
+=======
+export class CarouselComponent implements OnInit {
+  @Input() slides:IDocuments[];
+  currentIndex:number=0;
+  counterValue:string;
+  time=5;
+  interval:Subscription;
+>>>>>>> upstream/master:src/app/carousel/carousel.component.ts
 
-  currentSlide = 0;
+  constructor(private rxjsIntervalService:RxjsIntervalService) { }
 
+<<<<<<< HEAD:src/app/slide-carousel/slide-carousel.component.ts
   constructor() {}
 
   source = ["https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260", "https://images.pexels.com/photos/3586966/pexels-photo-3586966.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
@@ -86,6 +125,52 @@ export class SlideCarouselComponent implements OnInit {
     for (var index = 0; index < this.source.length; index++) {
       //new Image().src = slide.src;
       this.slides[index].src = this.source[index];
-    }
+=======
+  ngOnInit(): void {
+    this.initInterval()
   }
+
+  initInterval(){
+    if(this.interval){this.interval.unsubscribe()}
+    this.interval=this.rxjsIntervalService.initInterval(this.time*10).subscribe((d)=>{
+      this.counterValue=d.counterValue + "%";
+      if(d.counterValue===100){
+        this.next()
+      }
+    })
+  }
+
+
+  next(){
+    if(this.currentIndex<this.slides.length-1){
+      this.currentIndex++
+    }else{
+      this.currentIndex=0;
+    }
+    this.initInterval()
+
+  }
+
+  pre(){
+    if(this.currentIndex>0){
+      this.currentIndex--;
+    }else{
+      this.currentIndex=this.slides.length-1;
+>>>>>>> upstream/master:src/app/carousel/carousel.component.ts
+    }
+    this.initInterval()
+  }
+
+
+  @HostListener("mouseenter")
+  onMouseEnter(){
+    this.rxjsIntervalService.pauseCounter();
+  }
+
+  @HostListener("mouseleave")
+  onMouseLeave(){
+    this.rxjsIntervalService.resumeCounter();
+  }
+
+
 }
