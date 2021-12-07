@@ -132,4 +132,6 @@ export class HandtrackerComponent implements OnInit {
         console.log("no model")
     }
   }
+
+  get getGesture(){return this.detectedGesture;}
 }

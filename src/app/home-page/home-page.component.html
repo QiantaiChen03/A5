@@ -1,3 +1,14 @@
 <app-handtracker (onPrediction)="prediction($event)"></app-handtracker>
 
-<div [innerHTML]="gesture"></div>
+<!--<app-slide-carousel></app-slide-carousel>-->
+<div id="imageWork">Display Your Motion</div>
+<div>Detected Gesture: {{gesture}}</div>
+
+<app-right-open *ngIf = "gesture == 'Open Hand' || gesture == 'Two Open Hands' || gesture =='One open one pointing' || gesture =='One open One close'"></app-right-open>
+<app-left-open *ngIf = "gesture == 'Two Open Hands'"></app-left-open>
+<app-right-fist *ngIf = "gesture == 'Two Closed Hands' || gesture =='One open One close'"></app-right-fist>
+<app-left-fist *ngIf = "gesture == 'Closed Hand' || gesture == 'Two Closed Hands'"></app-left-fist>
+<app-pinch *ngIf = "gesture == 'Hand Pinching'"></app-pinch>
+<app-point *ngIf = "gesture == 'Hand Pointing' || gesture =='One open one pointing'"></app-point>
+
+
